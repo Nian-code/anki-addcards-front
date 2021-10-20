@@ -12,14 +12,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   
-  TextEditingController myController = TextEditingController();
-
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is disposed.
-    myController.dispose();
-    super.dispose();
-  }
+  String _word = "";
+  String _languajeSelectionated = "EN";
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +24,7 @@ class _HomePageState extends State<HomePage> {
           Footer().createFooter(),
           createBody(),
         ],
-      ),
-      
+      ),      
     );
    }
 
@@ -39,29 +32,67 @@ class _HomePageState extends State<HomePage> {
     return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-              getLogoAnki(),
-              Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: TextField(
-                controller: myController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter a search word')
-                )),
+              _getLogoAnki(),
+              searchBox(),
+              LanguageDropDown(),
               ElevatedButton(
                 onPressed: () {
-                  print(myController.text);
+                  print(_word);
                 },
                 child: const Text('Generate'),)
             ],
           );
   }
 
-  Widget getLogoAnki() {
-    return Image.network(
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Anki-icon.svg/1200px-Anki-icon.svg.png",
-            height: 120,
-            width: 200,
-            );
+  Padding LanguageDropDown() {
+    return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+              child:
+            Row(children:[
+              Text("Language:", 
+              style: TextStyle(fontWeight: FontWeight.bold),),
+              SizedBox(width: 15,),
+              _createDropDown()]));
+  }
+
+  Padding searchBox() {
+    return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: TextField(
+              autofocus: true,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter a search word'),
+              onChanged: (value){
+                _word = value;
+              },
+          ));
+  }
+
+  Widget _getLogoAnki() {
+    return Image.asset(
+      "images/anki_logo.png", 
+      width: 300, height: 200,);
+  }
+
+  Widget _createDropDown(){
+    return DropdownButton(
+      value: _languajeSelectionated,
+      items: _getItemsDropDown(), 
+      onChanged: (languje){
+        setState(() {
+           _languajeSelectionated = languje.toString();
+        });
+      });
+  }
+
+  List<DropdownMenuItem<String>> _getItemsDropDown(){
+    List<String> optionLanguage = ["EN", "ES"];
+
+    return optionLanguage.map((e) => 
+      DropdownMenuItem(
+        child: Text(e), value: e, 
+      )
+    ).toList();
   }
 }
