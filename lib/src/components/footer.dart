@@ -11,7 +11,7 @@ class Footer{
           children: [
             Container(
               height: 50.0,
-              color: Colors.indigo.shade300,
+              color: Colors.blue.shade500,
             ),
             Positioned(
               left: 0.0,
