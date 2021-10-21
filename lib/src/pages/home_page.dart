@@ -22,9 +22,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(title: Text("Anki create cards")),
       body: Stack(
-        children: [
-          Footer().createFooter(),
+        children: [     
           createBody(),
+          Footer().createFooter(),
         ],
       ),      
     );
@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget createBody() {
     return Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.symmetric(vertical: 10),
             child: ListView(
               children: [
                 _getLogoAnki(),
@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
   _todoSwitch(){
     return Center(
       child: SizedBox(
-        width: 150,
+        width: 200,
         child:
           SwitchListTile(
             title: Text("Todo",
@@ -123,20 +123,23 @@ class _HomePageState extends State<HomePage> {
               _createDropDown()]));
   }
 
-  Padding _searchBox() {
-    return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: TextField(
-              autofocus: true,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Enter a search word'),
-              onChanged: (value){
-                setState(() {
-                  _word = value;
-                });
-              },
-          ));
+  Widget _searchBox() {
+    return Center(
+              child: SizedBox(              
+              width: 600.0,
+              child: TextField(
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter a search word'),
+                  onChanged: (value){
+                    setState(() {
+                      _word = value;
+                    });
+                  },
+            ),
+          ),
+    );
   }
 
   Widget _getLogoAnki() {
