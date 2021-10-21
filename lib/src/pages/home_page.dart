@@ -1,10 +1,11 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_new
 
 import 'package:anki_addcards_front/src/components/footer.dart';
+import 'package:anki_addcards_front/src/configs/config.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -14,6 +15,7 @@ class _HomePageState extends State<HomePage> {
   
   String _word = "";
   String _languajeSelectionated = "EN";
+  bool   _checkTodo   = false;
 
   @override
   Widget build(BuildContext context) {
@@ -28,34 +30,100 @@ class _HomePageState extends State<HomePage> {
     );
    }
 
-  Column createBody() {
-    return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-              _getLogoAnki(),
-              searchBox(),
-              LanguageDropDown(),
-              ElevatedButton(
-                onPressed: () {
-                  print(_word);
-                },
-                child: const Text('Generate'),)
-            ],
-          );
+  Widget createBody() {
+    return Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ListView(
+              children: [
+                _getLogoAnki(),
+                _searchBox(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _languageDropDown(),  
+                    _createCheckBox("Create card", "createCardCheck"),
+                  ],
+                ),
+                _todoSwitch(),
+                _visibleConfigCheck(),
+                _generateButton()
+              ],
+            ),
+    );
   }
 
-  Padding LanguageDropDown() {
+  Widget _generateButton() {
+
+    return Center(
+      child: ElevatedButton(
+              onPressed: _word.isEmpty ? null : () {
+                  print(_word);
+              },
+              child: const Text('Generate'),
+            )
+      );
+  }
+
+  Visibility _visibleConfigCheck() {
+    return Visibility(
+              visible: !_checkTodo, 
+                child: Column(
+                  children: [
+                  _createCheckBox("Translate", "translateCheck"),
+                  _createCheckBox("Ipa", "ipaCheck"),
+                  _createCheckBox("Audio", "audioCheck"),
+                  _createCheckBox("Example", "exampleCheck"),
+                ],
+                ),
+            );
+  }
+
+  SizedBox _createCheckBox(String text, String item){
+    return SizedBox(
+      width: 200,
+      child:
+        CheckboxListTile(
+          title: Text(text,
+          style: TextStyle(fontWeight: FontWeight.bold),),
+          value: configs[item]!, 
+          onChanged: (status){
+            setState(() {
+              configs[item] = status!;
+            });
+        })
+      );
+  }
+
+  _todoSwitch(){
+    return Center(
+      child: SizedBox(
+        width: 150,
+        child:
+          SwitchListTile(
+            title: Text("Todo",
+            style: TextStyle(fontWeight: FontWeight.bold),),
+            value: _checkTodo, 
+            onChanged: (status){
+              setState(() {
+                _checkTodo = status;
+              });
+          })
+        ),
+    );
+  }
+
+  Padding _languageDropDown() {
     return Padding(
               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 0),
               child:
             Row(children:[
               Text("Language:", 
               style: TextStyle(fontWeight: FontWeight.bold),),
-              SizedBox(width: 15,),
+              SizedBox(width: 15),
               _createDropDown()]));
   }
 
-  Padding searchBox() {
+  Padding _searchBox() {
     return Padding(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: TextField(
@@ -64,7 +132,9 @@ class _HomePageState extends State<HomePage> {
                 border: OutlineInputBorder(),
                 hintText: 'Enter a search word'),
               onChanged: (value){
-                _word = value;
+                setState(() {
+                  _word = value;
+                });
               },
           ));
   }
@@ -76,14 +146,19 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _createDropDown(){
-    return DropdownButton(
-      value: _languajeSelectionated,
-      items: _getItemsDropDown(), 
-      onChanged: (languje){
-        setState(() {
-           _languajeSelectionated = languje.toString();
-        });
-      });
+    return SizedBox(
+      width: 48,
+      child:
+        DropdownButtonFormField(
+          value: _languajeSelectionated,
+          items: _getItemsDropDown(), 
+          onChanged: (languje){
+            setState(() {
+              _languajeSelectionated = languje.toString();
+            });
+          })
+     ,);
+    
   }
 
   List<DropdownMenuItem<String>> _getItemsDropDown(){
