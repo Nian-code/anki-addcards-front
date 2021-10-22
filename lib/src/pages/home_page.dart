@@ -46,7 +46,10 @@ class _HomePageState extends State<HomePage> {
                 ),
                 _todoSwitch(),
                 _visibleConfigCheck(),
-                _generateButton()
+                _generateButton(),
+                !_checkTodo ? 
+                  SizedBox(height: 100,)
+                : SizedBox(height: 50,),
               ],
             ),
     );
