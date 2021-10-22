@@ -132,9 +132,13 @@ class _HomePageState extends State<HomePage> {
               width: 600.0,
               child: TextField(
                   autofocus: true,
+                  autocorrect: false,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Enter a search word'),
+                    hintText: 'Example: Hello world',
+                    //helperText: 'Example: "Hello, world"',
+                    suffixIcon: Icon( Icons.search ),
+                    ),
                   onChanged: (value){
                     setState(() {
                       _word = value;
