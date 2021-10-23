@@ -1,5 +1,5 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_new
-
+import 'package:anki_addcards_front/src/components/drawer.dart';
 import 'package:anki_addcards_front/src/components/footer.dart';
 import 'package:anki_addcards_front/src/configs/config.dart';
 import 'package:flutter/material.dart';
@@ -24,11 +24,13 @@ class _HomePageState extends State<HomePage> {
       body: Stack(
         children: [     
           createBody(),
-          Footer().createFooter(),
+          Footer().createFooter(context),
         ],
-      ),      
+      ),
+      drawer: drawerPage(),
+      //backgroundColor: colorBackground,
     );
-   }
+  }
 
   Widget createBody() {
     return Padding(
@@ -56,7 +58,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _generateButton() {
-
     return Center(
       child: ElevatedButton(
               onPressed: _word.isEmpty ? null : () {
