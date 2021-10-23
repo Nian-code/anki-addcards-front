@@ -1,25 +1,32 @@
 // ignore_for_file: prefer_const_constructors
-
+import 'package:anki_addcards_front/src/pages/configPage.dart';
 import 'package:anki_addcards_front/src/ui/themes/themes.dart';
 import 'package:flutter/material.dart';
 
-Widget drawerPage(){
+Widget drawerPage(BuildContext context){
     return Drawer(
     child:  
       ListView(
       children: [
         _getHeader(),
-        ListTile(
-          title: Text("Settings"),
-          leading: Icon(Icons.settings),
-          onTap: (){
-            print("object");
-          },
-        )
-          ],
+        _buttonSettings(context)
+      ],
     ),
     );
   }
+
+ListTile _buttonSettings(BuildContext context) {
+  return ListTile(
+        title: Text("Settings"),
+        leading: Icon(Icons.settings),
+        onTap: (){
+          final route = MaterialPageRoute(
+            builder: (context) => ConfigPage());
+
+          Navigator.push(context, route);
+        },
+      );
+}
 
 Container _getHeader() {
   return Container(
@@ -34,6 +41,7 @@ Container _getHeader() {
               const Text("Hello",
                 style: 
                   TextStyle(
+                    color:  Colors.white,
                     fontSize: 20,
                     fontWeight: FontWeight.w500
                   ),

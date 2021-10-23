@@ -27,8 +27,7 @@ class _HomePageState extends State<HomePage> {
           Footer().createFooter(context),
         ],
       ),
-      drawer: drawerPage(),
-      //backgroundColor: colorBackground,
+      drawer: drawerPage(context),
     );
   }
 

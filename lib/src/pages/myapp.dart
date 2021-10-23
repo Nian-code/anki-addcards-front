@@ -1,3 +1,4 @@
+import 'package:anki_addcards_front/src/pages/configPage.dart';
 import 'package:anki_addcards_front/src/pages/home_page.dart';
 import 'package:anki_addcards_front/src/ui/themes/themes.dart';
 import 'package:flutter/material.dart';
