@@ -11,22 +11,23 @@ class ConfigPage extends StatefulWidget {
 }
 
 class _ConfigPageState extends State<ConfigPage> {
-  final _paddingInt = 20.0;
+  final _paddingInt = 10.0;
   final _styleBold = TextStyle(fontWeight: FontWeight.bold);
 
   @override
   Widget build(BuildContext context) {
-    List<String> _credentialsList = ["Acess key:", "Secret key:", "Region name:", "Bucket name:"];
-    List<String> _ankiConfigList = ["Deck anki name", "Fields name:", "Type card:"];
+
+    List<String> _ankiConfigList = ["Type card:", "Fields name:", "Deck anki name:",];
+    List<String> credentialsSettings = ["Access Key:", "Secret key:", "Region name:", "Bucket name:"];
 
     return Scaffold(
       appBar: AppBar(title: const Text("Settings"),),
       body: Padding(
         padding: EdgeInsets.all(_paddingInt),
-        child: Column(
+        child: ListView(
           children: [
             textTitle("Credencials AWS"),
-            invisibleContainer("Credencials AWS", _credentialsList),
+            invisibleContainer("Credencials AWS", credentialsSettings),
             textTitle("Anki config"),
             invisibleContainer("Anki config", _ankiConfigList),
           ],),
@@ -37,46 +38,78 @@ class _ConfigPageState extends State<ConfigPage> {
 
   Visibility invisibleContainer(String text, List<String> list) {
     return Visibility(
-            visible: configs[text],
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: _paddingInt),
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            visible: configs[text]!,
+            child: Column(
                   children: 
-                    _getTextByList(list),
+                    _getTextByMap(list),
                 ),
-              ),
-            ));
+              )
+           ;
   }
+  List<Widget> _getTextByMap(List<String> list) {
+    List<Widget> listWidget = [];
+
+    list.forEach((value) {
+
+      var listTitle = 
+        Padding(padding: EdgeInsets.symmetric(horizontal: _paddingInt*5),
+        child: Row(
+        children: [
+          Text(value, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),),
+          const SizedBox(width: 20),
+          Flexible(
+            child: _getListTitleWidget(value)),          
+          IconButton(
+            icon: 
+                configs[value]! ? Icon(Icons.edit)
+                  :  Icon(Icons.check_outlined, color: Colors.green.shade700),
+            onPressed: (){
+              setState(() {
+                configs[value] = !configs[value]!;
+              });
+            }, 
+          ),
+        ] ,
+        ));
+              
+      listWidget..add(listTitle)
+                ..add(Divider());
+    } 
+    );
+  
+    return listWidget;
+  }
+
+  Widget _getListTitleWidget(String editName){
+
+    TextField textField = TextField(
+      autocorrect: false,
+      readOnly: configs[editName]!,
+      controller: controllersListTite[editName],
+      onSubmitted: (string){
+        setState(() {
+          controllersListTite[editName]!.text = string;
+          configs[editName] = true;  
+          print(string); 
+        });
+      },
+    );
+    return textField;
+    }
+
 
   ListTile textTitle(String text) {
     return ListTile(
             title: Text(text,
                     style:  _styleBold,),
             trailing: Icon(
-                 configs[text] ? Icons.keyboard_arrow_up
+                 configs[text]! ? Icons.keyboard_arrow_up
                  : Icons.keyboard_arrow_down_outlined),
             onTap: (){
               setState(() {
-                configs[text] = !configs[text];
+                configs[text] = !configs[text]!;
               });
             },
           );
-  }
-
-  List<Widget> _getTextByList(List<String> list) {
-    List<Widget> listWidget = [];
-
-    list.forEach((element) {
-      listWidget.add(ListTile(
-                        title: Text(
-                          element,
-                          ),
-                      ));
-    });
-
-    return listWidget;
   }
 }
