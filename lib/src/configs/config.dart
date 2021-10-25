@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-Map<String, bool> configs = {
+Map<String, bool?> configs = {
+    "isDark" : null,
     "createCardCheck": true,
     "ipaCheck"     : true,
     "translateCheck"  : true,
@@ -29,5 +30,3 @@ Map<String, TextEditingController> controllersListTite = {
     "Fields name:": TextEditingController(text: "Inicial config"),
     "Type card:":   TextEditingController(text: "Inicial config"),
 };
-
-

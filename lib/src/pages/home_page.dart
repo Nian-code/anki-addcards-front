@@ -24,10 +24,10 @@ class _HomePageState extends State<HomePage> {
       body: Stack(
         children: [     
           createBody(),
-          Footer().createFooter(context),
+          FooterPage(),
         ],
       ),
-      drawer: drawerPage(context),
+      drawer: DrawerHomePage(),
     );
   }
 

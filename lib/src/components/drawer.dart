@@ -1,19 +1,40 @@
-// ignore_for_file: prefer_const_constructors
+import 'package:anki_addcards_front/src/configs/config.dart';
 import 'package:anki_addcards_front/src/pages/configPage.dart';
 import 'package:anki_addcards_front/src/ui/themes/themes.dart';
 import 'package:flutter/material.dart';
 
-Widget drawerPage(BuildContext context){
-    return Drawer(
-    child:  
-      ListView(
-      children: [
-        _getHeader(),
-        _buttonSettings(context)
-      ],
-    ),
-    );
+class DrawerHomePage extends StatefulWidget {
+  DrawerHomePage({Key? key}) : super(key: key);
+
+  @override
+  _DrawerHomePageState createState() => _DrawerHomePageState();
+}
+
+class _DrawerHomePageState extends State<DrawerHomePage> {
+
+  @override
+  void initState() {
+    super.initState();
+
+    currentTheme.addListener(() {
+      setState(() {});
+    });
   }
+  
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+            child:  
+              ListView(
+              children: [
+                _getHeader(),
+                _buttonSettings(context)
+              ],
+            ),
+          );
+  }
+}
+
 
 ListTile _buttonSettings(BuildContext context) {
   return ListTile(
@@ -30,14 +51,15 @@ ListTile _buttonSettings(BuildContext context) {
 
 Container _getHeader() {
   return Container(
-      color: currentTheme.getPrimaryColor(),
+      color: configs["isDark"] == null ? Colors.grey.shade800 : 
+              currentTheme.getPrimaryColor(),
       child:
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(width: 12,),
+              const SizedBox(width: 12,),
               const Text("Hello",
                 style: 
                   TextStyle(
@@ -46,7 +68,7 @@ Container _getHeader() {
                     fontWeight: FontWeight.w500
                   ),
               ),
-              Expanded(child: SizedBox()),
+              const Expanded(child: SizedBox()),
               IconButton(
                   iconSize: 28,
                   icon: Icon(

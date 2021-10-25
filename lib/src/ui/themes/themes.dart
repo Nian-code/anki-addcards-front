@@ -1,4 +1,6 @@
 
+import 'package:anki_addcards_front/db/kvs.dart';
+import 'package:anki_addcards_front/src/configs/config.dart';
 import 'package:flutter/material.dart';
 
 bool isDark = false;
@@ -6,17 +8,18 @@ final currentTheme = MyTheme();
 
 class MyTheme extends ChangeNotifier{
 
-  ThemeMode currenTheme(){
-    return isDark ? ThemeMode.dark : ThemeMode.light;
+  ThemeMode currenTheme() {
+    return configs["isDark"]! ? ThemeMode.dark : ThemeMode.light;
   }
 
-  void switchTheme(){
-    isDark = !isDark; 
+  void switchTheme() {
+    configs["isDark"] = !configs["isDark"]!;
     notifyListeners();
+    setBoolKVS("isDark", configs["isDark"]!);
   }
 
   Color getPrimaryColor(){
-    return isDark ? Colors.grey.shade800 : Colors.blue;
+    return configs["isDark"]! ? Colors.grey.shade800 : Colors.blue;
   }
 
 }
