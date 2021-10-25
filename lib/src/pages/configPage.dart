@@ -13,6 +13,7 @@ class ConfigPage extends StatefulWidget {
 class _ConfigPageState extends State<ConfigPage> {
   final _paddingInt = 10.0;
   final _styleBold = TextStyle(fontWeight: FontWeight.bold);
+  double maxSize = 160;
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +56,10 @@ class _ConfigPageState extends State<ConfigPage> {
         Padding(padding: EdgeInsets.symmetric(horizontal: _paddingInt*5),
         child: Row(
         children: [
-          Text(value, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),),
-          const SizedBox(width: 20),
+          SizedBox( width: maxSize,
+                    child: 
+                    Text(value, 
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),)),
           Flexible(
             child: _getListTitleWidget(value)),          
           IconButton(

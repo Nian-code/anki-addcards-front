@@ -46,7 +46,7 @@ class _MyAppState extends State<MyApp> {
       themeMode: configs["isDark"] == null ? ThemeMode.dark :
                   currentTheme.currenTheme(), 
       home: AnimatedSplashScreen(
-              duration: 1000,
+              duration: 800,
               splash: Image.asset("images/anki_logo.png"),
               splashTransition: SplashTransition.decoratedBoxTransition,
               nextScreen: const HomePage())
