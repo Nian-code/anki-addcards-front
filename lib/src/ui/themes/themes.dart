@@ -15,7 +15,7 @@ class MyTheme extends ChangeNotifier{
   void switchTheme() {
     configs["isDark"] = !configs["isDark"]!;
     notifyListeners();
-    setBoolKVS("isDark", configs["isDark"]!);
+    setBoolFromKVS("isDark", configs["isDark"]!);
   }
 
   Color getPrimaryColor(){

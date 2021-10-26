@@ -1,4 +1,7 @@
+import 'package:anki_addcards_front/db/kvs.dart';
 import 'package:anki_addcards_front/src/configs/config.dart';
+import 'package:anki_addcards_front/src/constant/constants.dart';
+import 'package:anki_addcards_front/src/ui/themes/themes.dart';
 import 'package:flutter/material.dart';
 
 
@@ -12,14 +15,14 @@ class ConfigPage extends StatefulWidget {
 
 class _ConfigPageState extends State<ConfigPage> {
   final _paddingInt = 10.0;
-  final _styleBold = TextStyle(fontWeight: FontWeight.bold);
+  final _styleBold = const TextStyle(fontWeight: FontWeight.bold);
   double maxSize = 160;
 
   @override
   Widget build(BuildContext context) {
 
-    List<String> _ankiConfigList = ["Type card:", "Fields name:", "Deck anki name:",];
-    List<String> credentialsSettings = ["Access Key:", "Secret key:", "Region name:", "Bucket name:"];
+    List<String> _ankiConfigList = [cartType, deckAnkiName,];
+    List<String> credentialsSettings = [accessKey, secretKey, regionName, bucketName];
 
     return Scaffold(
       appBar: AppBar(title: const Text("Settings"),),
@@ -31,6 +34,7 @@ class _ConfigPageState extends State<ConfigPage> {
             invisibleContainer("Credencials AWS", credentialsSettings),
             textTitle("Anki config"),
             invisibleContainer("Anki config", _ankiConfigList),
+            textTitle(nameFields),
           ],),
       ),
 
@@ -55,13 +59,22 @@ class _ConfigPageState extends State<ConfigPage> {
       var listTitle = 
         Padding(padding: EdgeInsets.symmetric(horizontal: _paddingInt*5),
         child: Row(
-        children: [
+        children: [          
           SizedBox( width: maxSize,
                     child: 
                     Text(value, 
                     style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),)),
           Flexible(
             child: _getListTitleWidget(value)),          
+          configs[value]! ? const SizedBox() :
+          IconButton(
+            icon:  Icon(Icons.backspace, color: Colors.blue),
+            onPressed: (){
+              setState(() {
+                controllersListTite[value]!.text = "";
+              });
+            }, 
+          ),
           IconButton(
             icon: 
                 configs[value]! ? Icon(Icons.edit)
@@ -69,6 +82,7 @@ class _ConfigPageState extends State<ConfigPage> {
             onPressed: (){
               setState(() {
                 configs[value] = !configs[value]!;
+                setStringFromKVS(value, controllersListTite[value]!.text);
               });
             }, 
           ),
@@ -93,6 +107,7 @@ class _ConfigPageState extends State<ConfigPage> {
         setState(() {
           controllersListTite[editName]!.text = string;
           configs[editName] = true;  
+          setStringFromKVS(editName, controllersListTite[editName]!.text);
           print(string); 
         });
       },

@@ -18,13 +18,14 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _loadConfig();
+    loadConfigAnkiAndAws();
     currentTheme.addListener(() {
       setState(() {});
     });
   }
 
   _loadConfig(){
-    getBoolKVS("isDark").then(
+    getBoolFromKVS("isDark").then(
       (value) 
         {
           setState(() {
@@ -48,7 +49,8 @@ class _MyAppState extends State<MyApp> {
       home: AnimatedSplashScreen(
               duration: 800,
               splash: Image.asset("images/anki_logo.png"),
-              splashTransition: SplashTransition.decoratedBoxTransition,
+              splashTransition: SplashTransition.fadeTransition,
+              backgroundColor: Colors.blue,
               nextScreen: const HomePage())
                    
     );

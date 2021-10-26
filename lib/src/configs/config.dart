@@ -1,7 +1,10 @@
+import 'package:anki_addcards_front/db/kvs.dart';
+import 'package:anki_addcards_front/src/constant/constants.dart';
 import 'package:flutter/material.dart';
 
+
 Map<String, bool?> configs = {
-    "isDark" : null,
+    isDark : null,
     "createCardCheck": true,
     "ipaCheck"     : true,
     "translateCheck"  : true,
@@ -11,22 +14,40 @@ Map<String, bool?> configs = {
     "Anki config": true,
     
     // Button TextEditing
-    "Access Key:": true,
-    "Secret key:":  true,
-    "Region name:": true,
-    "Bucket name:": true,
-    "Deck anki name:": true,
-    "Fields name:": true,
-    "Type card:": true,
+    accessKey: true,
+    secretKey:  true,
+    regionName: true,
+    bucketName: true,
+    deckAnkiName: true,
+    nameFields: true,
+    cartType: true,
 };
 
 
 Map<String, TextEditingController> controllersListTite = {
-    "Access Key:":  TextEditingController(text: "Inicial config"),
-    "Secret key:":  TextEditingController(text: "Inicial config"),
-    "Region name:": TextEditingController(text: "Inicial config"),
-    "Bucket name:": TextEditingController(text: "Inicial config"),
-    "Deck anki name:": TextEditingController(text: "Inicial config"),
-    "Fields name:": TextEditingController(text: "Inicial config"),
-    "Type card:":   TextEditingController(text: "Inicial config"),
+    accessKey:  TextEditingController(text: _accessKey),
+    secretKey:  TextEditingController(text: _secretkey),
+    regionName: TextEditingController(text: _regionName),
+    bucketName: TextEditingController(text: _bucketName),
+    deckAnkiName: TextEditingController(text: _deckAnki),
+    nameFields: TextEditingController(text: _nameFields),
+    cartType:   TextEditingController(text: _cardType),
 };
+
+String _accessKey  = "";
+String _secretkey  = "";
+String _regionName = "";
+String _bucketName = "";
+String _deckAnki = "";
+String _nameFields = "";
+String _cardType = "";
+
+loadConfigAnkiAndAws() async{
+  _accessKey = await getStringFromKVS(accessKey);
+  _secretkey = await getStringFromKVS(secretKey);
+  _bucketName = await getStringFromKVS(bucketName);
+  _deckAnki = await getStringFromKVS(deckAnkiName);
+  _nameFields = await getStringFromKVS(nameFields);
+  _cardType = await getStringFromKVS(cartType);
+}
+
