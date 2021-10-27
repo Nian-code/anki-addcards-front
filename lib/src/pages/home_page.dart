@@ -1,7 +1,8 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_new
 import 'package:anki_addcards_front/src/components/drawer.dart';
 import 'package:anki_addcards_front/src/components/footer.dart';
-import 'package:anki_addcards_front/src/configs/config.dart';
+import 'package:anki_addcards_front/src/configs/statusConfig.dart';
+import 'package:anki_addcards_front/src/utils/checkConfig.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,7 +16,6 @@ class _HomePageState extends State<HomePage> {
   
   String _word = "";
   String _languajeSelectionated = "EN";
-  bool   _checkTodo   = false;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
                 _todoSwitch(),
                 _visibleConfigCheck(),
                 _generateButton(),
-                !_checkTodo ? 
+                !configs["checkTodo"]! ? 
                   SizedBox(height: 100,)
                 : SizedBox(height: 50,),
               ],
@@ -60,7 +60,9 @@ class _HomePageState extends State<HomePage> {
     return Center(
       child: ElevatedButton(
               onPressed: _word.isEmpty ? null : () {
-                  print(_word);
+                  final check = checkConfig();
+                  print(check.mensaje);
+                  print(check.status);
               },
               child: const Text('Generate'),
             )
@@ -69,7 +71,7 @@ class _HomePageState extends State<HomePage> {
 
   Visibility _visibleConfigCheck() {
     return Visibility(
-              visible: !_checkTodo, 
+              visible: !configs["checkTodo"]!, 
                 child: Column(
                   children: [
                   _createCheckBox("Translate", "translateCheck"),
@@ -105,10 +107,10 @@ class _HomePageState extends State<HomePage> {
           SwitchListTile(
             title: Text("Todo",
             style: TextStyle(fontWeight: FontWeight.bold),),
-            value: _checkTodo, 
+            value: configs["checkTodo"]!, 
             onChanged: (status){
               setState(() {
-                _checkTodo = status;
+                configs["checkTodo"] = status;
               });
           })
         ),

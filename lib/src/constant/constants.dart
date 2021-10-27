@@ -6,3 +6,7 @@ const bucketName = "Bucket name:";
 const deckAnkiName = "Deck anki name:";
 const cartType = "Card type:";
 const nameFields = "Fields";
+const ipa = "Ipa name field:";
+const audio = "Audio name field:";
+const traduction = "Translation name field:";
+const examples = "Example name field:";

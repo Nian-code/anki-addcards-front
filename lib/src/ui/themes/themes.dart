@@ -1,6 +1,6 @@
 
 import 'package:anki_addcards_front/db/kvs.dart';
-import 'package:anki_addcards_front/src/configs/config.dart';
+import 'package:anki_addcards_front/src/configs/statusConfig.dart';
 import 'package:flutter/material.dart';
 
 bool isDark = false;

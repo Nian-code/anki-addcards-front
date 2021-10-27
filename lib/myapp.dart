@@ -1,12 +1,14 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:anki_addcards_front/db/kvs.dart';
-import 'package:anki_addcards_front/src/configs/config.dart';
+import 'package:anki_addcards_front/src/configs/statusConfig.dart';
+import 'package:anki_addcards_front/src/configs/textControllerConfig.dart';
 import 'package:anki_addcards_front/src/pages/home_page.dart';
 import 'package:anki_addcards_front/src/ui/themes/themes.dart';
 import 'package:flutter/material.dart';
 
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();

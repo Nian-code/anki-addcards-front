@@ -1,4 +1,4 @@
-import 'package:anki_addcards_front/src/configs/config.dart';
+import 'package:anki_addcards_front/src/configs/statusConfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<bool> getBoolFromKVS(String text) async {

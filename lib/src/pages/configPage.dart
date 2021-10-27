@@ -1,7 +1,7 @@
 import 'package:anki_addcards_front/db/kvs.dart';
-import 'package:anki_addcards_front/src/configs/config.dart';
+import 'package:anki_addcards_front/src/configs/statusConfig.dart';
+import 'package:anki_addcards_front/src/configs/textControllerConfig.dart';
 import 'package:anki_addcards_front/src/constant/constants.dart';
-import 'package:anki_addcards_front/src/ui/themes/themes.dart';
 import 'package:flutter/material.dart';
 
 
@@ -22,6 +22,7 @@ class _ConfigPageState extends State<ConfigPage> {
   Widget build(BuildContext context) {
 
     List<String> _ankiConfigList = [cartType, deckAnkiName,];
+    List<String> _ankiFields = [traduction, ipa, audio, examples];
     List<String> credentialsSettings = [accessKey, secretKey, regionName, bucketName];
 
     return Scaffold(
@@ -35,6 +36,7 @@ class _ConfigPageState extends State<ConfigPage> {
             textTitle("Anki config"),
             invisibleContainer("Anki config", _ankiConfigList),
             textTitle(nameFields),
+            invisibleContainer("Anki config", _ankiFields),
           ],),
       ),
 
@@ -63,7 +65,8 @@ class _ConfigPageState extends State<ConfigPage> {
           SizedBox( width: maxSize,
                     child: 
                     Text(value, 
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),)),
+                    style: const TextStyle(fontWeight: FontWeight.w600,
+                     fontSize: 15),)),
           Flexible(
             child: _getListTitleWidget(value)),          
           configs[value]! ? const SizedBox() :
@@ -108,7 +111,6 @@ class _ConfigPageState extends State<ConfigPage> {
           controllersListTite[editName]!.text = string;
           configs[editName] = true;  
           setStringFromKVS(editName, controllersListTite[editName]!.text);
-          print(string); 
         });
       },
     );
